@@ -7,8 +7,11 @@ import BootstrapVue from 'bootstrap-vue'
 import 'bootstrap/dist/css/bootstrap.css'
 import 'bootstrap-vue/dist/bootstrap-vue.css'
 import 'font-awesome/css/font-awesome.css'
+import Meta from 'vue-meta'
 
 Vue.use(BootstrapVue)
+Vue.use(Meta)
+
 Vue.config.productionTip = false
 
 /* eslint-disable no-new */
