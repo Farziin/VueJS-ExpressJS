@@ -64,15 +64,26 @@
         </div>
       </b-col>
     </div>
+    <span class="download-title">Blueray</span>
+    <hr class="download-separator"/>
+    <movie-download-row></movie-download-row>
+
+    <span class="download-title">موسیقی متن</span>
+    <hr class="download-separator"/>
+    <music-download-row></music-download-row>
   </div>
 </template>
 
 <script>
 import FilmInformation from './film-information'
 import MButton from '../m-button'
+import MovieDownloadRow from './movie-download-row'
+import MusicDownloadRow from './music-download-row'
 
 export default {
   components: {
+    MusicDownloadRow,
+    MovieDownloadRow,
     MButton,
     FilmInformation},
   name: 'download-tab',
@@ -96,10 +107,6 @@ export default {
 </script>
 
 <style scoped>
-
-  .root {
-
-  }
 
   .download-rate {
     display: flex;
@@ -213,4 +220,19 @@ export default {
     margin-top: 15px;
   }
 
+  .download-title {
+    display:flex;
+    margin-right: 100px;
+    margin-top: 30px;
+    color: #1a7adb;
+    font-size: 20px;
+    font-weight: bold;
+  }
+
+  .download-separator {
+    background-color: #1a7adb;
+    height: 1px;
+    margin: 5px 90px;
+    border: none;
+  }
 </style>
