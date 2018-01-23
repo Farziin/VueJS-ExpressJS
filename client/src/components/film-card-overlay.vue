@@ -1,13 +1,16 @@
 <template>
   <div class="overlay">
-    <span class="download-text">دانلود فیلم</span>
+    <span class="download-text">دانلود</span>
     <span class="title">{{ filmTitle }}</span>
     <span class="year">{{ year }}</span>
     <div class="row">
-      <b-button class="circle-button" v-html="downloadIcon"></b-button>
+      <router-link :to="'/download/' + id">
+        <b-button class="circle-button" v-html="downloadIcon"></b-button>
+      </router-link>
       <b-button class="circle-button" v-html="likeIcon"></b-button>
       <b-button class="circle-button" v-html="playIcon"></b-button>
     </div>
+    <span class="title">{{ originalTitle }}</span>
   </div>
 </template>
 
@@ -19,7 +22,9 @@ export default {
   name: 'film-card-overlay',
   props: [
     'filmTitle',
-    'year'
+    'year',
+    'originalTitle',
+    'id'
   ],
   data () {
     return {
@@ -28,6 +33,12 @@ export default {
       playIcon: '<i class="fa fa-video-camera" aria-hidden="true"></i>'
     }
   }
+  // methods: {
+  //   goToDownloadPage (id) {
+  //     this.$router.push('/download/' + id)
+  //     this.$router.forward()
+  //   }
+  // }
 }
 </script>
 

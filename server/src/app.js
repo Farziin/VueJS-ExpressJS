@@ -12,7 +12,6 @@ app.use(cors())
 
 /* connect database */
 db.connect()
-
 /* router */
 require('./routes')(app)
 

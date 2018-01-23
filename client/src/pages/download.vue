@@ -44,6 +44,16 @@ export default {
     meta: [
       { name: 'viewport', content: 'width=device-width, initial-scale=1' }
     ]
+  },
+  data () {
+    return {
+      id: this.$route.params.id
+    }
+  },
+  watch: {
+    $route: function (newVal) {
+      this.id = parseInt(newVal.params.id)
+    }
   }
 }
 </script>

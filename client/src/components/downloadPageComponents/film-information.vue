@@ -1,35 +1,37 @@
 <template>
   <div class="root">
     <div class="container-fluid title-bar" :style="titleBarStyle">
-      <span class="title">{{ pageTitle }}</span>
-      <b-img :src="poster" width="350" class="poster" :style="posterBackground"></b-img>
+      <span class="title">دانلود {{data.original_title}} {{data.year}}</span>
+      <b-img :src="'http://localhost:8081/posters/' + id" width="350" class="poster" :style="posterBackground"></b-img>
     </div>
 
     <div class="info-part">
       <b-img fluid :src="image" class="image"></b-img>
       <div class="info">
         <div class="info-row">
-          <span class="rate-cell"><span v-html="starIcon" class="star"></span> {{ imdbRate }}</span>
+          <span class="rate-cell"><span v-html="starIcon" class="star"></span> {{ data.rate }}</span>
         </div>
         <div class="info-row">
-          <div class="simple-text">زبان: {{ lang }}</div>
-          <div class="simple-text country">محصول  {{ country }}</div>
+          <div class="simple-text">زبان: {{ data.language }}</div>
+          <div class="simple-text country">محصول  {{ data.country }}</div>
         </div>
         <hr class="separator"/>
         <div>
-          <div class="persian-title">{{ persianTitle }}</div>
-          <div class="simple-text">{{ description }}</div>
+          <div class="persian-title">{{ data.title }}</div>
+          <div class="simple-text">{{ data.description }}</div>
         </div>
         <hr class="separator"/>
-        <div class="simple-text">کارگردان: {{ director }}</div>
-        <div class="simple-text">نویسنده: {{ writer }}</div>
-        <div class="simple-text">ستارگان: {{ stars }}</div>
+        <div class="simple-text">کارگردان: {{ data.director }}</div>
+        <div class="simple-text">نویسنده: {{ data.writer }}</div>
+        <div class="simple-text">ستارگان: {{ data.stars }}</div>
       </div>
     </div>
   </div>
 </template>
 
 <script>
+import api from '../../services/api'
+
 export default {
   name: 'film-information',
   props: [
@@ -37,31 +39,43 @@ export default {
   ],
   data () {
     return {
-      pageTitle: 'دانلود انیمیشن Despicable Me 3 دوبله فارسی',
-      imdbRate: '7.2',
-      lang: 'انگلیسی',
-      country: 'ایالات متحده آمریکا',
-      persianTitle: 'دانلود انیمیشن من شرور 3 (من نفرت‌انگیز 3) دوبله فارسی',
-      description: 'گرو که به همراه سه دخترش، زندگی جدیدی را با لوسی آغاز کرده، قصد دارد تا تمام شرارت‌های پیشین خود را کنار بگذارد و به زندگی‌اش به طور عادی ادامه دهد اما سر و کله برادر دوقلویش که سال‌ها پیش او را گم کرده است پیدا می‌شود ...',
-      director: 'خودم',
-      writer: 'خودم',
-      stars: 'خودم و خودش',
       image: require('../../assets/images/despicable-me3-large-pic.jpg'),
-      poster: require('../../assets/images/despicable-me3-poster.jpg'),
-      color: 'orange',
-      starIcon: '<i class="fa fa-star" aria-hidden="true"></i>'
+      starIcon: '<i class="fa fa-star" aria-hidden="true"></i>',
+      data: []
     }
   },
   computed: {
     titleBarStyle () {
       return {
-        'background-color': this.color
+        'background-color': this.data.color
       }
     },
     posterBackground () {
       return {
-        'background-color': this.color
+        'background-color': this.data.color
       }
+    }
+  },
+  created () {
+    var self = this
+    api().get('movie/' + this.id + '/details').then(function (response) {
+      self.data = response.data
+      console.log('RESPONSE', response.data)
+      console.log(self.data)
+    }).catch(function (error) {
+      console.log('ERROR: ', error)
+    })
+  },
+  watch: {
+    id: function (newVal) {
+      var self = this
+      api().get('movie/' + newVal + '/details').then(function (response) {
+        self.data = response.data
+        console.log('RESPONSE', response.data)
+        console.log(self.data)
+      }).catch(function (error) {
+        console.log('ERROR: ', error)
+      })
     }
   }
 }
@@ -86,6 +100,7 @@ export default {
     margin-right: 30px;
     margin-top: 10px;
     float: right;
+    width: 20%;
   }
 
   .poster {
@@ -93,7 +108,7 @@ export default {
     z-index: +1;
     padding: 10px;
     top: 50px;
-    left: 370px;
+    left: 275px;
     display: flex;
     float: right;
   }
@@ -157,8 +172,9 @@ export default {
   .info {
     position: absolute;
     width: 60%;
-    top: 50%;
+    top: 43%;
     left: 50%;
-    transform: translate(-70%, -120%);
+    transform: translate(-70%, -100%);
+    margin-top: 20px;
   }
 </style>

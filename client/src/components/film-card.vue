@@ -1,12 +1,12 @@
 <template>
     <div @mouseover="showPanel()" @mouseleave="hidePanel()" class="root">
         <!--<script src="https://use.fontawesome.com/008cd32a02.js"></script>-->
-        <film-card-overlay :filmTitle="filmTitle" :year="year" class="overlay" v-show="active"></film-card-overlay>
+        <film-card-overlay :id="id" :filmTitle="filmTitle" :year="year" :originalTitle="originalTitle" class="overlay" v-show="active"></film-card-overlay>
         <div class="film-card">
             <div class="top-part"></div>
             <div class="bottom-part" :style="style">
             </div>
-            <b-img center :src="image" class="film-poster"></b-img>
+            <b-img center :src="'http://localhost:8081/posters/' + id" class="film-poster"></b-img>
 
             <div class="category-div">
                 <div class="table-row-sec">
@@ -30,13 +30,15 @@ export default {
   components: {FilmCardOverlay},
   name: 'film-card',
   props: [
+    'id',
     'color',
     'image',
     'categories',
     'imdbRate',
     'quality',
     'filmTitle',
-    'year'
+    'year',
+    'originalTitle'
   ],
   computed: {
     style () {

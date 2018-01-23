@@ -12,11 +12,11 @@
       <carousel id="carousel" :perPage="5" :navigationEnabled="true"
                 :navigationNextLabel="nextLabel" :navigationPrevLabel="prevLabel" :autoplay="true"
                 :perPageCustom="[[480, 3], [768, 5]]">
-        <slide>
-          <film-card color="#AE7444" filmTitle="Glass Castle" year="2017" imdbRate="7.2"
-                     categories="درام زندگینامه"
-                     image="https://images-na.ssl-images-amazon.com/images/M/MV5BMTY2Nzk0MDE3Nl5BMl5BanBnXkFtZTgwOTI0ODc0MjI@._V1_UX182_CR0,0,182,268_AL_.jpg"
+        <slide v-for="movie in recentMovies" :key="movie._id">
+          <film-card :id="movie._id" :color="movie.color" :filmTitle="movie.title" :year="movie.year" :imdbRate="movie.rate"
+                     :categories="movie.category" :originalTitle="movie.original_title"
                      quality="BlueRay"></film-card>
+          <!--TODO: add poster image-->
         </slide>
       </carousel>
     </div>
@@ -32,6 +32,7 @@ import StaticPoster from '../components/static-poster'
 import FilmCard from '../components/film-card'
 import {Carousel, Slide} from 'vue-carousel'
 import FooterPart from '../components/footer-part'
+import api from '../services/api'
 
 export default {
   components: {
@@ -47,8 +48,18 @@ export default {
   data () {
     return {
       nextLabel: '<i class="fa fa-angle-right" aria-hidden="true"></i>',
-      prevLabel: '<i class="fa fa-angle-left" aria-hidden="true"></i>'
+      prevLabel: '<i class="fa fa-angle-left" aria-hidden="true"></i>',
+      recentMovies: []
     }
+  },
+  created () {
+    var self = this
+    api().get('movie/recent').then(function (response) {
+      self.recentMovies = response.data
+      console.log(self.recentMovies)
+    }).catch(function (error) {
+      console.log('ERROR: ', error)
+    })
   }
 }
 </script>
