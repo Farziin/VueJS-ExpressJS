@@ -10,7 +10,7 @@
         </b-tab>
         <b-tab title="زیرنویس"></b-tab>
         <b-tab title="نظر کاربران">
-          <comment-tab></comment-tab>
+          <comment-tab :id="id"></comment-tab>
         </b-tab>
         <b-tab title="نقد و بررسی"></b-tab>
         <b-tab title="عوامل فیلم"></b-tab>
@@ -49,12 +49,14 @@ export default {
     return {
       id: this.$route.params.id
     }
-  },
-  watch: {
-    $route: function (newVal) {
-      this.id = parseInt(newVal.params.id)
-    }
   }
+// watch: {
+  // $route: function (newVal) {
+  //   console.log('CHANGED')
+  //   this.$router.push(newVal)
+  //   this.$router.go(1)
+  // }
+// }
 }
 </script>
 

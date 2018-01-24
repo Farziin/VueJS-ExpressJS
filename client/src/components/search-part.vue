@@ -24,7 +24,7 @@
 </template>
 
 <script>
-import SimpleCircleButton from '@/components/simple-circle-button'
+import SimpleCircleButton from '../components/simple-circle-button'
 
 export default {
   name: 'search-part',

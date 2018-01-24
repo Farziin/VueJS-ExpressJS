@@ -8,20 +8,29 @@
         </b-button>
       </div>
       <div id="search-bar" class="col-sm-5">
-        <input type="text" id="text-field" placeholder="جستجوی فیلم، سریال، بازیگر، کارگردان و ..."/>
-        <span v-html="searchIcon" class="search-icon"></span>
+        <input type="text" id="text-field" placeholder="جستجوی فیلم، سریال، بازیگر، کارگردان و ..."
+               v-model="searchText" v-on:keyup.enter="search(searchText)"/>
+        <span @click="search(searchText)" v-html="searchIcon" class="search-icon"></span>
       </div>
     </div>
   </div>
 </template>
 
 <script>
+
 export default {
   name: 'header-part',
   data () {
     return {
       regIcon: '<i class="fa fa-id-card" aria-hidden="true"></i>',
-      searchIcon: '<i class="fa fa-search" aria-hidden="true"></i>'
+      searchIcon: '<i class="fa fa-search" aria-hidden="true"></i>',
+      searchText: ''
+    }
+  },
+  methods: {
+    search (text) {
+      this.$router.push('/search-result/' + text)
+      this.$router.forward()
     }
   }
 }
@@ -108,4 +117,5 @@ export default {
     padding: 8px 8px;
     margin-right: auto;
   }
+
 </style>

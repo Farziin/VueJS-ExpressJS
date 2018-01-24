@@ -1,6 +1,6 @@
 <template>
   <b-button class="button-style" :style="style" v-html="text" @mouseover="mouseOver()"
-            @mouseleave="mouseOver()"></b-button>
+            @mouseleave="mouseOver()" @click="clickFunction()"></b-button>
 </template>
 
 <script>
@@ -10,7 +10,8 @@ export default {
     'backgroundColor',
     'hoveringColor',
     'size',
-    'text'
+    'text',
+    'clickFunction'
   ],
   computed: {
     style () {

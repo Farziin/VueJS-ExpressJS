@@ -15,11 +15,12 @@ export default {
   name: 'custom-input-range',
   props: [
     'minValue',
-    'maxValue'
+    'maxValue',
+    'value'
   ],
-  data () {
-    return {
-      value: 6
+  watch: {
+    value: function (newVal) {
+      this.$emit('update:value', newVal)
     }
   }
 }
