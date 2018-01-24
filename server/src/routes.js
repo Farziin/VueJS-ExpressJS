@@ -2,6 +2,7 @@ const recentMovies = require('./services/get-recent-movie')
 const sendPoster = require('./services/send-poster')
 const movieDetails = require('./services/get-movies-details')
 const addComment = require('./services/add-comment')
+const searchMovie = require('./services/search-movie')
 
 module.exports = (app) => {
   /* tow routes for recent movie: with number and without number */
@@ -15,5 +16,7 @@ module.exports = (app) => {
   app.get('/movie/:id/details', movieDetails)
 
   /* insert comment */
-  app.post('/movie/:id/comment', addComment)
+  app.post('/movie/:id/comments', addComment)
+
+  app.get('/search', searchMovie)
 }

@@ -3,6 +3,7 @@ import Router from 'vue-router'
 import Main from '../pages/main'
 import Download from '../pages/download'
 import Profile from '../pages/profile'
+import SearchResult from '../pages/search-result'
 
 Vue.use(Router)
 
@@ -22,6 +23,11 @@ export default new Router({
       path: '/profile',
       name: 'صفحه کاربری',
       component: Profile
+    },
+    {
+      path: '/search-result/:text',
+      name: 'نتیجه جستجو',
+      component: SearchResult
     }
   ]
 })
