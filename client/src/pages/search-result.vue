@@ -42,13 +42,15 @@ export default {
     }
   },
   created () {
-    console.log('CREATED')
-    this.result = this.search(this.$route.params.text)
+    this.result = this.search()
+  },
+  watch: {
+    '$route': 'search'
   },
   methods: {
-    search (text) {
+    search () {
       var self = this
-      api().get('/search?q=' + text)
+      api().get('/search?q=' + self.$route.params.text)
         .then(function (response) {
           self.result = response.data
         })
