@@ -3,6 +3,7 @@ const sendPoster = require('./services/send-poster')
 const movieDetails = require('./services/get-movies-details')
 const addComment = require('./services/add-comment')
 const searchMovie = require('./services/search-movie')
+const submitMovie = require('./services/submit-movie')
 
 module.exports = (app) => {
   /* tow routes for recent movie: with number and without number */
@@ -18,5 +19,9 @@ module.exports = (app) => {
   /* insert comment */
   app.post('/movie/:id/comments', addComment)
 
+  /* search movie in database */
   app.get('/search', searchMovie)
+
+  /* upload and submit movie in website */
+  app.post('/submit', submitMovie)
 }

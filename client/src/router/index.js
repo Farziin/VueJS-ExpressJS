@@ -4,6 +4,7 @@ import Main from '../pages/main'
 import Download from '../pages/download'
 import Profile from '../pages/profile'
 import SearchResult from '../pages/search-result'
+import UploadFilm from '../pages/upload'
 
 Vue.use(Router)
 
@@ -28,6 +29,11 @@ export default new Router({
       path: '/search-result/:text',
       name: 'نتیجه جستجو',
       component: SearchResult
+    },
+    {
+      path: '/upload',
+      name: 'آپلود فیلم',
+      component: UploadFilm
     }
   ]
 })
