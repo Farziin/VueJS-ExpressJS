@@ -1,6 +1,6 @@
 <template>
   <div>
-    <b-button :style="style" class="circle-btn" v-html="icon"></b-button>
+    <b-button :style="style" class="circle-btn" v-html="icon" @click="clickFunction(text)"></b-button>
   </div>
 </template>
 
@@ -10,7 +10,9 @@ export default {
   props: [
     'icon',
     'color',
-    'hoveringColor'
+    'hoveringColor',
+    'clickFunction',
+    'text'
   ],
   computed: {
     style () {

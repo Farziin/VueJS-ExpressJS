@@ -1,6 +1,6 @@
 <template>
   <div class="root">
-    <b-form @submit="onSubmit">
+    <b-form v-on:submit.prevent="onSubmit()" v-if="show">
       <b-card class="edit-profile-card">
         <b-form-group bg-variant="light" breakpoint="lg" label="آپلود فیلم"
                       label-size="lg" label-class="font-weight-bold pt-0" class="title">
@@ -61,6 +61,10 @@
         <b-button type="submit" variant="success" class="update-profile-btn">آپلود</b-button>
       </b-card>
     </b-form>
+
+    <b-card class="response-card" v-if="!show">
+      <div class="success">آپلود با موفقیت انجام شد.</div>
+    </b-card>
   </div>
 </template>
 
@@ -84,7 +88,8 @@ export default {
         category: '',
         coverFile: '',
         movie: ''
-      }
+      },
+      show: true
     }
   },
   methods: {
@@ -95,7 +100,7 @@ export default {
           console.log(response)
           var formData = new FormData()
           formData.append('_id', self.form._id)
-          formData.append('name', self.form.name)
+          formData.append('title', self.form.name)
           formData.append('length', self.form.length)
           formData.append('year', self.form.year)
           formData.append('country', self.form.country)
@@ -110,6 +115,7 @@ export default {
             console.log('YES')
             api().post('/submit', formData)
               .then(function (response) {
+                self.show = false
                 console.log('MOVIE UPLOADED ', response)
               })
               .catch(function (error) {
@@ -164,7 +170,15 @@ export default {
     width: 15%;
   }
 
-  .edit-profile-card {
+  .edit-profile-card, .response-card {
     margin: 30px;
   }
+
+  .success {
+    color: #4b9567;
+    font-size: 25px;
+    font-weight: bold;
+    margin: 30px;
+  }
+
 </style>

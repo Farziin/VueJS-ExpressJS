@@ -1,9 +1,10 @@
 const db = require('../database')
 
 module.exports = (req, res) => {
+  console.log(req.body)
   var comment = req.body
   comment.id = req.params.id
-  if (comment.comment && comment.author && comment.director_rate && comment.acting_rate && comment.screenplay_rate && comment.select) {
+  if (comment.comment && comment.author && comment.direction_rate && comment.acting_rate && comment.screenplay_rate && comment.select) {
     db.get().collection('comment').insertOne(comment, function (err) {
       if (err) {
         console.log('ERROR IN ADDING COMMENT', err)

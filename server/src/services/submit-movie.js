@@ -20,11 +20,11 @@ function insertDB (req) {
   entry._id = parseInt(req.body._id)
   entry.created_at = new Date(Date.now()).toISOString()
   entry.title = req.body.title
-  entry.original_title = req.body.original_title
+  entry.original_title = req.body.title
   entry.rate = parseInt(req.body.rate)
   entry.year = parseInt(req.body.year)
   entry.length = req.body.length
-  entry.language = req.body.language
+  entry.language = 'انگلیسی'
   entry.country = req.body.country
   entry.description = req.body.description
   entry.director = req.body.director

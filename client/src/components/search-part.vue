@@ -8,9 +8,9 @@
         <simple-circle-button icon="<i class='fa fa-search-plus' aria-hidden='true'></i>"
                               color="#8d7ebd"></simple-circle-button>
         <simple-circle-button icon="<i class='fa fa-search' aria-hidden='true'></i>"
-                              color="#5aae7a"></simple-circle-button>
-        <b-form-input type="text" placeholder="جست‌وجوی فیلم، سریال، بازیگر، کارگردان و ..."
-                      class="col-sm-6 radius">
+                              color="#5aae7a" :clickFunction="search" :text="searchText"></simple-circle-button>
+        <b-form-input @keydown.enter.native="search(searchText)" type="text" placeholder="جست‌وجوی فیلم، سریال، بازیگر، کارگردان و ..."
+                      class="col-sm-6 radius" v-model="searchText">
         </b-form-input>
       </div>
       <div class="row">
@@ -33,7 +33,14 @@ export default {
   },
   data () {
     return {
-      searchContainerTitle: 'دانلود فیلم، سریال، انیمیشن، مستند و دوبله با 13621 عنوان'
+      searchContainerTitle: 'دانلود فیلم، سریال، انیمیشن، مستند و دوبله با 13621 عنوان',
+      searchText: ''
+    }
+  },
+  methods: {
+    search (text) {
+      this.$router.push('/search-result/' + text)
+      this.$router.forward()
     }
   }
 }

@@ -21,18 +21,21 @@
         </b-row>
       </b-row>
       <b-row class="col-sm-6" align-v="center" align-h="center">
-        <b-form class="form">
+        <b-form class="form" v-on:submit.prevent="sendComment()">
           <b-form-group class="form-group">
-            <b-form-textarea id="custom-txtarea" v-model="text" placeholder="نظر شما درباره این فیلم چیست ؟" :rows="6" no-resize="true"></b-form-textarea>
+            <b-form-textarea id="custom-txtarea" v-model="text" placeholder="نظر شما درباره این فیلم چیست ؟" :rows="6" :no-resize="true"></b-form-textarea>
             <b-form-radio-group v-model="selected" :options="options" class="radio-btn">
             </b-form-radio-group>
           </b-form-group>
-          <m-button :clickFunction="sendComment" backgroundColor="#4E9B6E" hoveringColor="white" text="ثبت دیدگاه" class="m-btn"></m-button>
+          <b-button type="submit" class="submit-btn">ثبت دیدگاه</b-button>
         </b-form>
       </b-row>
     </div>
     <div class="col-sm-12 success-text" v-if="!show">
       نظر شما ثبت شد.
+    </div>
+    <div class="col-sm-12">
+      <comment v-for="comment in comments" :key="comment._id" :directorRate="parseInt(comment.direction_rate)" :actingRate="parseInt(comment.acting_rate)" :screenplayRate="parseInt(comment.screenplay_rate)" :text="comment.comment" :suggesting="comment.select"></comment>
     </div>
   </div>
 </template>
@@ -41,9 +44,11 @@
 import CustomInputRange from './custom-input-range'
 import MButton from '../m-button'
 import api from '../../services/api'
+import Comment from './comment'
 
 export default {
   components: {
+    Comment,
     CustomInputRange,
     MButton
   },
@@ -63,7 +68,8 @@ export default {
         {text: 'نظری ندارم', value: 'noComment'},
         {text: 'پیشنهاد نمی‌کنم', value: 'noSuggested'},
         {text: 'پیشنهاد می‌کنم', value: 'suggested'}
-      ]
+      ],
+      comments: []
     }
   },
   methods: {
@@ -74,6 +80,8 @@ export default {
       comment.acting_rate = this.actingRate
       comment.screenplay_rate = this.screenPlayRate
       comment.select = this.selected
+      comment.author = 'farziin'
+      console.log('COMMENT', comment)
       var self = this
       api().post('/movie/' + this.id + '/comments', comment)
         .then(function (response) {
@@ -83,7 +91,21 @@ export default {
         .catch(function (err) {
           console.log('FRONT SENT COMMENT RESPONSE ERROR', err)
         })
+    },
+    giveComments () {
+      var self = this
+      api().get('/movie/' + this.id + '/comments')
+        .then(function (response) {
+          console.log('FRONT GIVE COMMENT RESPONSE: ', response)
+          self.comments = response.data
+        })
+        .catch(function (err) {
+          console.log('FRONT GIVE COMMENT RESPONSE ERROR', err)
+        })
     }
+  },
+  created () {
+    this.giveComments()
   }
 }
 
@@ -138,9 +160,17 @@ export default {
     float: right;
   }
 
-  .m-btn {
+  .submit-btn {
     float: left;
     margin-top: 20px;
+    background-color: #4E9B6E;
+    padding: 15px 25px;
+  }
+
+  .submit-btn:hover {
+    color: #4E9B6E;
+    background-color: white;
+    transition: 0.5s;
   }
 
   .success-text {
