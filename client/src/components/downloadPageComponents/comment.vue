@@ -17,7 +17,7 @@
         <b-col cols="12" class="rate-row">
           <b-col cols="4" class="rate-title">فیلمنامه  {{screenplayRate}} از {{max}}</b-col>
           <b-col cols="8">
-            <b-progress :value="actingRate" animated :max="max"></b-progress>
+            <b-progress :value="screenplayRate" animated :max="max"></b-progress>
           </b-col>
         </b-col>
       </b-col>

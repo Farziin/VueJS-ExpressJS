@@ -1,26 +1,5 @@
 <template>
   <div class="root">
-    <div class="download-rate">
-      <b-col cols="5">
-        <div class="download-rate-text">ارزش دانلود {{ downloadRate }} از {{ max }}</div>
-
-        <b-col cols="8">
-          <b-progress :max="max">
-            <b-progress-bar :value="downloadRate" variant="success" animated class="progress-bar"></b-progress-bar>
-          </b-progress>
-        </b-col>
-      </b-col>
-      <b-col cols="3">
-        <b-col class="suggested-number" cols="8">
-          {{ suggested }} نفر از {{ allUsers }} تماشای این فیلم را پیشنهاد کرده‌اند.
-        </b-col>
-      </b-col>
-      <b-col cols="4">
-        <b-col class="please-rate-text">شما هم بر اساس ارزش دانلود به فیلم رأی دهید.</b-col>
-        <m-button backgroundColor="#1568bd" hoveringColor="white" text="امتیاز دهید"></m-button>
-      </b-col>
-    </div>
-    <hr class="separator"/>
     <div class="option-row">
       <b-col cols="8">
         <b-dropdown id="lang" variant="light" class="dropdown">
@@ -92,54 +71,17 @@ export default {
   ],
   data () {
     return {
-      selected: 'noComment',
+      selected: 'suggesting',
       options: [
         {text: 'پیشنهادی', value: 'suggesting'},
         {text: 'حرفه‌ای', value: 'professional'}
-      ],
-      downloadRate: 7,
-      max: 10,
-      suggested: 64,
-      allUsers: 72
+      ]
     }
   }
 }
 </script>
 
 <style scoped>
-
-  .download-rate {
-    display: flex;
-    margin: 30px 5%;
-  }
-
-  .download-rate-text {
-    text-align: right;
-    color: green;
-    font-weight: bold;
-    font-size: 16px;
-    margin-right: 20px;
-  }
-
-  .suggested-number {
-    color: #1568bd;
-    font-weight: bold;
-    font-size: 18px;
-    text-align: center;
-  }
-
-  .please-rate-text {
-    color: lightgray;
-    text-align: center;
-    font-size: 18px;
-    margin-bottom: 15px;
-  }
-
-  .separator {
-    background-color: lightgray;
-    height: 1px;
-    width: 90%;
-  }
 
   #all-lang {
     border: 1px solid lightgray;
@@ -168,6 +110,7 @@ export default {
 
   .option-row {
     display: flex;
+    margin-top: 40px;
   }
 
   .grid-btn-active {

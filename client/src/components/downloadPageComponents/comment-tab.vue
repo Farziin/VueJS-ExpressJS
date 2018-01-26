@@ -34,6 +34,30 @@
     <div class="col-sm-12 success-text" v-if="!show">
       نظر شما ثبت شد.
     </div>
+
+    <div class="download-rate">
+      <b-col cols="5">
+        <div class="download-rate-text">ارزش دانلود {{ downloadRate }} از {{ max }}</div>
+
+        <b-col cols="8">
+          <b-progress :max="max">
+            <b-progress-bar :value="downloadRate" variant="success" animated class="progress-bar"></b-progress-bar>
+          </b-progress>
+        </b-col>
+      </b-col>
+      <b-col cols="3">
+        <b-col class="suggested-number" cols="8">
+          {{ suggested }} نفر از {{ allUsers }} تماشای این فیلم را پیشنهاد کرده‌اند.
+        </b-col>
+      </b-col>
+      <b-col cols="4">
+        <b-col class="please-rate-text">شما هم بر اساس ارزش دانلود به فیلم رأی دهید.</b-col>
+        <m-button backgroundColor="#1568bd" hoveringColor="white" text="امتیاز دهید"></m-button>
+      </b-col>
+    </div>
+
+    <hr class="separator"/>
+
     <div class="col-sm-12">
       <comment v-for="comment in comments" :key="comment._id" :directorRate="parseInt(comment.direction_rate)" :actingRate="parseInt(comment.acting_rate)" :screenplayRate="parseInt(comment.screenplay_rate)" :text="comment.comment" :suggesting="comment.select"></comment>
     </div>
@@ -69,6 +93,10 @@ export default {
         {text: 'پیشنهاد نمی‌کنم', value: 'noSuggested'},
         {text: 'پیشنهاد می‌کنم', value: 'suggested'}
       ],
+      downloadRate: 0,
+      max: 10,
+      suggested: 64,
+      allUsers: 72,
       comments: []
     }
   },
@@ -98,10 +126,24 @@ export default {
         .then(function (response) {
           console.log('FRONT GIVE COMMENT RESPONSE: ', response)
           self.comments = response.data
+          self.downloadRate = self.calculateDownloadRate()
         })
         .catch(function (err) {
           console.log('FRONT GIVE COMMENT RESPONSE ERROR', err)
         })
+    },
+    calculateDownloadRate () {
+      var counter = 0
+      var sum = 0
+      for (var index in this.comments) {
+        console.log('COMMENT')
+        sum += ((parseInt(this.comments[index].direction_rate) + parseInt(this.comments[index].acting_rate) + parseInt(this.comments[index].screenplay_rate)) / 3)
+        counter++
+      }
+      if (counter === 0) {
+        return 0
+      }
+      return Math.round(sum / counter)
     }
   },
   created () {
@@ -179,6 +221,39 @@ export default {
     font-weight: bold;
     color: #4b9567;
     margin-top: 30px;
+  }
+
+  .download-rate {
+    display: flex;
+    margin: 50px 5%;
+  }
+
+  .download-rate-text {
+    text-align: right;
+    color: green;
+    font-weight: bold;
+    font-size: 16px;
+    margin-right: 20px;
+  }
+
+  .suggested-number {
+    color: #1568bd;
+    font-weight: bold;
+    font-size: 18px;
+    text-align: center;
+  }
+
+  .please-rate-text {
+    color: lightgray;
+    text-align: center;
+    font-size: 18px;
+    margin-bottom: 15px;
+  }
+
+  .separator {
+    background-color: lightgray;
+    height: 1px;
+    width: 90%;
   }
 
 </style>
